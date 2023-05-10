@@ -1,0 +1,32 @@
+{% extends "home/base.html" %}
+
+{% block title %}Group Page{% endblock %}
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Groups</h1>
+  {% for group in groups %}
+    <h2>{{ group.name }}</h2>
+    <p>Notes:</p>
+    <ul>
+      {% for note in group.notes.all %}
+        <li>{{ note.name }}</li>
+      {% endfor %}
+    </ul>
+  {% endfor %}
+
+</hr>
+
+{% for group in groups %}
+  <tr>
+    <td>{{ group.name }}</td>
+    <td>
+      {% for note in group.notes.all %}
+        {{ note.name }}{% if not forloop.last %}, {% endif %}
+      {% endfor %}
+    </td>
+    <td><a href="{% url 'group-update' pk=group.pk %}">Edit</a></td>
+  </tr>
+{% endfor %}
+{% endblock %}

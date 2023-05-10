@@ -1,0 +1,63 @@
+{% extends "home/base.html" %}
+
+{% block title %}Home Page{% endblock %}
+
+{% block content %}
+
+
+<div class="container p-5 my-5 bg-dark text-white" border-radius="20%">
+    <h2>Home Page</h2>
+
+</br>
+
+    {% if request.user.is_authenticated %}
+        {% if notes %}
+        <h2>Notes:</h2>
+            {% for note in notes %}
+                        <p> <strong>Title:</strong> {{ note }} </p>
+                        <p> <strong>Last modified:</strong> {{ note.date }}</p>
+                        <a href="/notes/{{note.id}}/">View</a>
+                        <hr>
+            {% endfor %}
+        {% else %}
+            <p>No notes found</p>
+        {% endif %}
+
+</div>
+
+</br>
+
+<div class="container p-5 my-5 bg-dark text-white">
+        {% if audios %}
+        <h2>Audio:</h2>
+        {% for audio in audios %}
+            <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#demo">{{ audio }}</button>
+            <div id="demo" class="collapse">
+            <p> <strong>Name:</strong> {{ audio }} </p>
+            <p> <strong>Uploaded by:</strong> {{ audio.user }} </p>
+            <p> <strong>Text:</strong> {{ audio.file_text }} </p>
+            <p> <strong>Uploaded on:</strong> {{ audio.date }} </p>
+            <p><strong>Download:</strong> {{ audio.audio_file }}</p>
+            <a href="{{audio.audio_file}}">{{ audio }}</a>
+            <form action="{% url 'delete_audio' audio.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+            </div>
+            <hr>
+        {% endfor %}
+        {% else %}
+            <p>No audio notes found</p>
+        {% endif %}
+    {% else %}
+        <h3>You need to login to view your notes</h3>
+    {% endif %}
+
+
+
+</div>
+
+
+
+
+{% endblock %}

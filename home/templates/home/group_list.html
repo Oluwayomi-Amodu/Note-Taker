@@ -1,0 +1,26 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+  <h1>Groups</h1>
+  <h3>Create group:  <a class="nav-link custom-nav-link" href="/groups/new">New</a></h3>
+
+</br>
+
+
+<div class="container p-5 my-5 bg-dark text-white">
+  <ul class="list-group list-group-numbered">
+  {% for group in groups %}
+    <li>
+      <strong>{{ group.name }}</strong> <a href="/groups/{{group.id}}/edit/">Edit</a>
+      <ul>
+      {% for note in group.notes.all %}
+        <li>{{ note.name }}</li>
+        <a href="/notes_edit/{{note.id}}">Edit</a>
+      {% endfor %}
+      </ul>
+    </li>
+    <hr>
+  {% endfor %}
+  </ul>
+</div>
+{% endblock %}

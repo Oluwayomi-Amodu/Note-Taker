@@ -1,0 +1,47 @@
+{% extends "home/base.html" %}
+
+        
+{% block content %}
+<div class="container p-5 my-5 bg-dark text-white">
+    <form  enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p> Text: {{ note.audio.file_text }} </p>
+        <button class="btn btn-primary" type="submit">Save Note</button>
+    </form>
+
+</div>
+
+</br>
+</br>
+
+<div class="container p-5 my-5 bg-dark text-white">
+    <h1>Supporting_Doc</h1>
+    {% for file in sup %}
+    <p> {{ file.name }} | <a href="{{file.supporting_doc.url}}">{{ file.supporting_doc }}</a> </p>
+    {% if file.supporting_doc.url|lower|slice:"-4:" == ".pdf" %}
+        <object data="{{ file.supporting_doc.url }}" type="application/pdf" width="50%" height="50%">
+            <p>Your web browser doesn't have a PDF plugin.
+            Instead you can <a href="{{ file.supporting_doc.url }}">click here to
+            download the PDF file.</a></p>
+        </object>
+    {% elif file.supporting_doc.url|lower|slice:"-4:" == ".doc" or file.supporting_doc.url|lower|slice:"-4:" == ".docx" %}
+        <object data="{{ file.supporting_doc.url }}" type="application/msword" width="50%" height="50%">
+            <p>Your web browser doesn't have a Word plugin.
+            Instead you can <a href="{{ file.supporting_doc.url }}">click here to
+            download the Word file.</a></p>
+        </object>
+    {% elif file.supporting_doc.url|lower|slice:"-4:" == ".pdf" %}
+        <iframe src="{{ file.supporting_doc.url }}" width="50%" height="50%"></iframe>
+    {% elif file.supporting_doc.url|lower|slice:"-4:" == ".jpg" or file.supporting_doc.url|lower|slice:"-5:" == ".jpeg" or file.supporting_doc.url|lower|slice:"-4:" == ".png" %}
+        <img src="{{ file.supporting_doc.url }}" width="50%" />
+    {% endif %}
+    {% endfor %}
+    </br>
+</br>
+    {% if note_id %}
+    <a class="btn btn-primary" href="{% url 'add_doc' note_id=note_id %}">Add Supporting Doc</a>
+    {% endif%}
+</div>
+
+{% endblock %}

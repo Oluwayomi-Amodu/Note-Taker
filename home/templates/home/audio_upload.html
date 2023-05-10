@@ -1,0 +1,15 @@
+{% extends "home/base.html" %}
+
+        
+{% block content %}
+<div class="container p-5 my-5 bg-dark text-white">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary" type="submit">Upload</button>
+  </form>
+
+
+</div>
+
+{% endblock %}

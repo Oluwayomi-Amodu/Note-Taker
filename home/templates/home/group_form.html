@@ -1,0 +1,12 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+  <h1>{% if form.instance.pk %}Edit{% else %}Create{% endif %} Group</h1>
+  <div class="container p-5 my-5 bg-dark text-white" border-radius="20%">
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+  </form>
+</div>
+{% endblock %}

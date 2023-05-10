@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{%endblock%}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <style>
+    body {background-color: #0F4C75;}
+    h1   {color: #ffffff;}
+    h2   {color: #ffffff;}
+    h3   {color: #ffffff;}
+    p    {color: #ffffff;}
+    .custom-nav-link {color: #ffffff;}
+    .navbar {background-color: blue;}
+  </style>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-sm bg-primary">
+    <div class="container-fluid">
+        <!-- Logo -->
+        <a class="navbar-brand" href="#">
+            <img src="/media/logo/microphone.png" alt="Logo" class="rounded" style="width:15%;">
+        </a>
+
+        <h2>Hi {{ request.user  }}</h2>
+        
+        <!-- Navbar items -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link custom-nav-link" href="/">Home</a>
+            </li>
+
+            {% if not request.user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link custom-nav-link" href="/signup">Register</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link custom-nav-link" href="/login">Login</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link custom-nav-link" href="/audio_upload">Audio Upload</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link custom-nav-link" href="/notes_new">Notes New</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link custom-nav-link" href="/groups">Groups</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link custom-nav-link" href="/logout">Logout</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+
+
+  <br>
+  {% block content %}
+
+  {% endblock %}
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+
+    <div class="mt-5 p-4 bg-dark text-white text-center">
+      <p>Created by O/L</p>
+    </div>
+</body>
+
+</html>

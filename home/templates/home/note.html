@@ -1,0 +1,75 @@
+{% extends "home/base.html" %}
+
+{% block title %}Note Page{% endblock %}
+
+{% block content %}
+
+    <h1>Note Page</h1>
+<div class="container p-5 my-5 bg-dark text-white" >
+
+    </br></br>
+
+    <h1>Note:</h1>
+
+    <p> Title: {{ note }} </p>
+    <p> Content: {{ note.note }} </p>
+    <p> Uploaded by: {{ note.user }} </p>
+    <p> Uploaded on: {{ note.date }} </p>
+    <a href="/notes_edit/{{note.id}}">Edit</a>
+    </br></br>
+    <form action="{% url 'delete_note' note.id %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+
+</div>
+
+
+
+<div class="container p-5 my-5 bg-dark text-white">
+    <h1>Audio:</h1>
+    {% for audio in audios %}
+    <p><strong>Name:</strong>  {{ audio }} </p>
+    <p> <strong>Uploaded by:</strong> {{ audio.user }} </p>
+    <p> <strong>Text:</strong> {{ audio.file_text }} </p>
+    <p><strong>Uploaded on:</strong>  {{ audio.date }} </p>
+    <p><strong>File name:</strong>  {{ audio.audio_file }} </p>
+</br>
+    <form action="{% url 'delete_audio' audio.id %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+    <hr>
+    {% endfor %}
+</div>
+
+
+
+<div class="container p-5 my-5 bg-dark text-white">
+    <h1>Supporting_Doc</h1>
+    {% for file in sup %}
+    <p> {{ file.name }} | <a href="{{file.supporting_doc.url}}">{{ file.supporting_doc }}</a> </p>
+    {% if file.supporting_doc.url|lower|slice:"-4:" == ".pdf" %}
+        <object data="{{ file.supporting_doc.url }}" type="application/pdf" width="50%" height="50%">
+            <p>Your web browser doesn't have a PDF plugin.
+            Instead you can <a href="{{ file.supporting_doc.url }}">click here to
+            download the PDF file.</a></p>
+        </object>
+    {% elif file.supporting_doc.url|lower|slice:"-4:" == ".doc" or file.supporting_doc.url|lower|slice:"-4:" == ".docx" %}
+        <object data="{{ file.supporting_doc.url }}" type="application/msword" width="50%" height="50%">
+            <p>Your web browser doesn't have a Word plugin.
+            Instead you can <a href="{{ file.supporting_doc.url }}">click here to
+            download the Word file.</a></p>
+        </object>
+    {% elif file.supporting_doc.url|lower|slice:"-4:" == ".pdf" %}
+        <iframe src="{{ file.supporting_doc.url }}" width="50%" height="50%"></iframe>
+    {% elif file.supporting_doc.url|lower|slice:"-4:" == ".jpg" or file.supporting_doc.url|lower|slice:"-5:" == ".jpeg" or file.supporting_doc.url|lower|slice:"-4:" == ".png" %}
+        <img src="{{ file.supporting_doc.url }}" width="50%" />
+    {% endif %}
+    {% endfor %}
+</div>
+
+
+
+
+{% endblock %}
