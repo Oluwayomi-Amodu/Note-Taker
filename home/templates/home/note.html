@@ -34,7 +34,12 @@
     <p> <strong>Text:</strong> {{ audio.file_text }} </p>
     <p><strong>Uploaded on:</strong>  {{ audio.date }} </p>
     <p><strong>File name:</strong>  {{ audio.audio_file }} </p>
+    <audio controls>
+        <source src="/media/{{audio.audio_file}}" type="audio/wav">
+      Your browser does not support the audio element.
+    </audio>
 </br>
+<a href="/media/{{audio.audio_file}}">{{ audio }}</a>
     <form action="{% url 'delete_audio' audio.id %}" method="POST">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger">Delete</button>
@@ -66,6 +71,8 @@
     {% elif file.supporting_doc.url|lower|slice:"-4:" == ".jpg" or file.supporting_doc.url|lower|slice:"-5:" == ".jpeg" or file.supporting_doc.url|lower|slice:"-4:" == ".png" %}
         <img src="{{ file.supporting_doc.url }}" width="50%" />
     {% endif %}
+    <hr>
+    </br>
     {% endfor %}
 </div>
 

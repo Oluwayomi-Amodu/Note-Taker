@@ -20,11 +20,25 @@ User Login
                 {% endfor %}
             </p>
             {% endfor %}
+
+            
+            {% if form.errors %}
+                {{ form.errors }}
+            {% endif %}
         
         <button class="btn btn-primary" type="submit">SUBMIT</button>
     </form>
 
 
 </div>
+
+<script>
+    setTimeout(function() {
+      let errors = document.getElementsByClassName('errorlist');
+      while(errors.length > 0) {
+        errors[0].parentNode.removeChild(errors[0]);
+      }
+    }, 10000);
+  </script>
 
 {% endblock %}

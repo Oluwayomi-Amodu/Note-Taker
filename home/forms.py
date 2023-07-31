@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.core.exceptions import ValidationError
 from django.db import transaction
 from .models import *
+from django.contrib.auth import authenticate
 
 
 
@@ -37,6 +38,14 @@ class UserLoginForm(AuthenticationForm):
         super(UserLoginForm, self).__init__(*args, **kwargs)
     username = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Your username', 'class': 'form-control'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Your password', 'class': 'form-control'}))
+
+    #def clean(self):
+     #   username = self.cleaned_data.get('username')
+     #   password = self.cleaned_data.get('password')
+     #   user = authenticate(username=username, password=password)
+     #   if not user or not user.is_active:
+     #       raise forms.ValidationError("Sorry, that login was invalid. Please try again.")
+     #   return self.cleaned_data
 
 class NoteEditorForm(forms.ModelForm):
     name = forms.CharField(label='Name',widget=forms.TextInput(attrs={'class': 'form-control'}))

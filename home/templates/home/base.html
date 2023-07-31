@@ -33,7 +33,10 @@
             <img src="/media/logo/microphone.png" alt="Logo" class="rounded" style="width:15%;">
         </a>
 
-        <h2>Hi {{ request.user  }}</h2>
+        <h2>Hi {{ request.user }}</h2>
+        
+        <input type="text" id="searchInput" onkeyup="search_animal()" placeholder="Search...">
+        <div id="searchResults"></div>
         
         <!-- Navbar items -->
         <ul class="navbar-nav">
